@@ -1,6 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import actions from './redux/actions';
 
 function App() {
+    const {isLoggedIn} = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            dispatch(actions.auth.fetchUser());
+        }
+    }, [isLoggedIn, dispatch]);
+
     return (
         <div className="App">
             <div className="bg-white">
