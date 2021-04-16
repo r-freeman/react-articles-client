@@ -6,6 +6,7 @@
     "@craco/craco": "^6.1.1",
     "@headlessui/react": "^0.3.2",
     "@tailwindcss/postcss7-compat": "^2.1.0",
+    "@tailwindcss/typography": "^0.4.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -17,8 +18,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.0"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "craco start",
