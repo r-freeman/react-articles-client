@@ -1,7 +1,9 @@
 import {
     FETCH_ARTICLES_BEGIN,
     FETCH_ARTICLES_SUCCESS,
-    FETCH_ARTICLES_FAILURE
+    FETCH_ARTICLES_FAILURE,
+    FETCH_ARTICLE_SUCCESS,
+    FETCH_ARTICLE_FAILURE
 } from '../types';
 
 const fetchArticles = () => async (dispatch) => {
@@ -26,4 +28,19 @@ const fetchArticles = () => async (dispatch) => {
     }
 };
 
-export const articles = {fetchArticles};
+const fetchArticle = (slug) => async (dispatch, getState) => {
+    try {
+        const article = getState().articles.articles.find(article => article.slug === slug);
+
+        if (typeof article !== 'undefined') {
+            dispatch({type: FETCH_ARTICLE_SUCCESS, payload: article});
+        } else {
+            dispatch({type: FETCH_ARTICLE_FAILURE});
+        }
+    } catch (err) {
+        console.log(err);
+        dispatch({type: FETCH_ARTICLE_FAILURE});
+    }
+};
+
+export const articles = {fetchArticles, fetchArticle};
