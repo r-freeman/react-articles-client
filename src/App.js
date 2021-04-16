@@ -16,6 +16,10 @@ function App() {
         }
     }, [isLoggedIn, dispatch]);
 
+    useEffect(() => {
+        dispatch(actions.articles.fetchArticles());
+    }, [dispatch]);
+
     return (
         <div className="App">
             <Switch>
