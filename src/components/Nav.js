@@ -100,9 +100,9 @@ function Nav() {
                 </div>
             </div>
             <div className={`${!navMenu ? 'hidden' : 'sm:hidden'}`} id="mobile-menu">
-                <div className="px-2 pt-2 pb-3 space-y-1">
+                <div className="px-8 pt-2 pb-3 space-y-1">
                     <NavLink to="/articles"
-                             className={`${isCurrentPath('/articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'} block px-3 py-2 rounded-md text-base font-medium`}
+                             className={`${isCurrentPath('articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} block px-3 py-2 rounded-md hover:bg-gray-700 text-base font-medium`}
                              aria-current="page">Articles</NavLink>
                 </div>
             </div>
