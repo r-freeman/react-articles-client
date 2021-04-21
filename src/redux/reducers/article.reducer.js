@@ -3,10 +3,13 @@ import {
     FETCH_ARTICLES_SUCCESS,
     FETCH_ARTICLES_FAILURE,
     FETCH_ARTICLE_SUCCESS,
-    FETCH_ARTICLE_FAILURE
+    FETCH_ARTICLE_FAILURE,
+    POST_COMMENT_BEGIN,
+    POST_COMMENT_SUCCESS,
+    POST_COMMENT_FAILURE
 } from '../types';
 
-const initialState = {articles: [], article: {}, isFetchingArticles: false};
+const initialState = {articles: [], article: {}, isFetchingArticles: false, isPostingComment: false};
 
 const articles = (state = initialState, action) => {
     switch (action.type) {
@@ -20,6 +23,17 @@ const articles = (state = initialState, action) => {
             return {...state, article: action.payload}
         case FETCH_ARTICLE_FAILURE:
             return {...state, article: {}};
+        case POST_COMMENT_BEGIN:
+            return {...state, isPostingComment: true};
+        case POST_COMMENT_SUCCESS:
+            const {article} = state;
+            const comment = action.payload;
+
+            article.comments.push(comment);
+
+            return {...state, article, isPostingComment: false};
+        case POST_COMMENT_FAILURE:
+            return {...state, isPostingComment: false};
         default:
             return state;
     }

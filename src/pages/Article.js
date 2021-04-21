@@ -1,9 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import actions from '../redux/actions';
 
 import Nav from '../components/Nav';
+import CommentList from '../components/CommentList';
+import CommentInput from '../components/CommentInput';
 
 function Article() {
     const {article} = useSelector(state => state.articles);
@@ -41,6 +43,11 @@ function Article() {
                             {article.body}
                         </p>
                     </div>
+                    <section className="mt-10 text-lg max-w-prose mx-auto">
+                        <h2 className="block text-xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-2xl">Comments</h2>
+                        <CommentList/>
+                        <CommentInput/>
+                    </section>
                 </div>
             </div>
         </div>

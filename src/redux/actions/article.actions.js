@@ -3,7 +3,10 @@ import {
     FETCH_ARTICLES_SUCCESS,
     FETCH_ARTICLES_FAILURE,
     FETCH_ARTICLE_SUCCESS,
-    FETCH_ARTICLE_FAILURE
+    FETCH_ARTICLE_FAILURE,
+    POST_COMMENT_BEGIN,
+    POST_COMMENT_SUCCESS,
+    POST_COMMENT_FAILURE
 } from '../types';
 
 const fetchArticles = () => async (dispatch) => {
@@ -43,4 +46,33 @@ const fetchArticle = (slug) => async (dispatch, getState) => {
     }
 };
 
-export const articles = {fetchArticles, fetchArticle};
+const postComment = (comment) => async (dispatch, getState) => {
+    try {
+        dispatch({type: POST_COMMENT_BEGIN});
+
+        const {_id, name, photo} = getState().auth.user;
+        const {article} = getState().articles;
+
+        const request = await fetch('http://localhost:4000/api/v1/comments', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({body: comment, author_id: _id, article_id: article._id})
+        });
+
+        if (request.status === 201) {
+            const comment = await request.json();
+
+            comment.author = {_id, name, photo};
+
+            dispatch({type: POST_COMMENT_SUCCESS, payload: comment});
+        }
+    } catch (err) {
+        console.log(err);
+        dispatch({type: POST_COMMENT_FAILURE});
+    }
+}
+
+export const articles = {fetchArticles, fetchArticle, postComment};
