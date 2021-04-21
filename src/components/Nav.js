@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {NavLink, useRouteMatch} from 'react-router-dom';
 import {Transition} from '@headlessui/react';
+import {useSelector} from 'react-redux';
 
 function Nav() {
+    const {user} = useSelector(state => state.auth);
     const [userMenu, setUserMenu] = useState(false);
     const [navMenu, setNavMenu] = useState(false);
     let match = useRouteMatch();
@@ -56,6 +58,7 @@ function Nav() {
                     <div
                         className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                         <div className="ml-3 relative">
+                            {user &&
                             <div>
                                 <button type="button"
                                         className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
@@ -65,10 +68,11 @@ function Nav() {
                                 >
                                     <span className="sr-only">Open user menu</span>
                                     <img className="h-8 w-8 rounded-full"
-                                         src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                         alt=""/>
+                                         src={user.photo}
+                                         alt={user.name}/>
                                 </button>
                             </div>
+                            }
                             <Transition
                                 show={userMenu}
                                 enter="transition ease-out duration-100"
