@@ -16,14 +16,10 @@ function CommentItem({comment}) {
                             </p>
                         </div>
                         <div className="mt-1 text-sm text-gray-700">
-                            <p>{comment.body}</p>
+                            <p className="whitespace-pre-wrap">{comment.body}</p>
                         </div>
                         <div className="mt-2 text-sm space-x-2">
                             <span className="text-gray-500 font-medium">4d ago</span>
-                            <span className="text-gray-500 font-medium">&middot;</span>
-                            <button type="button"
-                                    className="text-gray-900 font-medium focus:outline-none">Reply
-                            </button>
                         </div>
                     </div>
                 </div>
