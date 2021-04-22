@@ -8,17 +8,12 @@ function CommentInput() {
     const dispatch = useDispatch();
     const commentInput = useRef();
 
-    function handleCommentSubmit(e) {
+    async function handleCommentSubmit(e) {
         e.preventDefault();
 
         const comment = commentInput.current.value;
-        dispatch(actions.articles.postComment(comment));
+        await dispatch(actions.articles.postComment(comment));
     }
-
-    //
-    // function handleCommentReply() {
-    //     commentInput.current.focus();
-    // }
 
     return (
         <div className="mt-8">
