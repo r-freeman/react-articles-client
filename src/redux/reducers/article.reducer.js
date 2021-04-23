@@ -6,10 +6,21 @@ import {
     FETCH_ARTICLE_FAILURE,
     POST_COMMENT_BEGIN,
     POST_COMMENT_SUCCESS,
-    POST_COMMENT_FAILURE
+    POST_COMMENT_FAILURE,
+    SET_CURRENT_COMMENT,
+    DELETE_COMMENT_BEGIN,
+    DELETE_COMMENT_SUCCESS,
+    DELETE_COMMENT_FAILURE
 } from '../types';
 
-const initialState = {articles: [], article: {}, isFetchingArticles: false, isPostingComment: false};
+const initialState = {
+    articles: [],
+    article: {},
+    isFetchingArticles: false,
+    isPostingComment: false,
+    isDeletingComment: false,
+    currentComment: {}
+};
 
 const articles = (state = initialState, action) => {
     switch (action.type) {
@@ -26,14 +37,26 @@ const articles = (state = initialState, action) => {
         case POST_COMMENT_BEGIN:
             return {...state, isPostingComment: true};
         case POST_COMMENT_SUCCESS:
-            const {article} = state;
-            const comment = action.payload;
-
-            article.comments.push(comment);
-
-            return {...state, article, isPostingComment: false};
+            return {
+                ...state,
+                articles: action.payload,
+                isPostingComment: false
+            };
         case POST_COMMENT_FAILURE:
             return {...state, isPostingComment: false};
+        case SET_CURRENT_COMMENT:
+            return {...state, currentComment: action.payload};
+        case DELETE_COMMENT_BEGIN:
+            return {...state, isDeletingComment: true};
+        case DELETE_COMMENT_SUCCESS:
+            return {
+                ...state,
+                articles: action.payload,
+                isDeletingComment: false,
+                currentComment: {}
+            };
+        case DELETE_COMMENT_FAILURE:
+            return {...state, isDeletingComment: false};
         default:
             return state;
     }
