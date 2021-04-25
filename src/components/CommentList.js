@@ -2,13 +2,17 @@ import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 
 import CommentItem from './CommentItem';
+import UpdateCommentModal from './UpdateCommentModal';
 import DeleteCommentModal from './DeleteCommentModal';
 
 function CommentList() {
-    const [deleteCommentModal, setDeleteCommentModal] = useState(false);
     const {article} = useSelector(state => state.articles);
+    const [updateCommentModal, setUpdateCommentModal] = useState(false);
+    const [deleteCommentModal, setDeleteCommentModal] = useState(false);
 
+    const toggleUpdateCommentModal = () => setUpdateCommentModal(!updateCommentModal);
     const toggleDeleteCommentModal = () => setDeleteCommentModal(!deleteCommentModal);
+
     const hasComments = (Object.keys(article).length > 0 && article.comments.length > 0);
 
     return (
@@ -16,6 +20,11 @@ function CommentList() {
             {hasComments
                 ?
                 <React.Fragment>
+                    {updateCommentModal &&
+                    <UpdateCommentModal
+                        toggleUpdateCommentModal={toggleUpdateCommentModal}
+                    />
+                    }
                     {deleteCommentModal &&
                     <DeleteCommentModal
                         toggleDeleteCommentModal={toggleDeleteCommentModal}/>
@@ -25,6 +34,7 @@ function CommentList() {
                             <CommentItem
                                 comment={comment}
                                 key={comment._id}
+                                toggleUpdateCommentModal={toggleUpdateCommentModal}
                                 toggleDeleteCommentModal={toggleDeleteCommentModal}
                             />
                         )}
@@ -34,7 +44,7 @@ function CommentList() {
                     comments.</p>
             }
         </React.Fragment>
-    )
+    );
 }
 
 export default CommentList;

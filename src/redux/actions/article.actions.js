@@ -8,6 +8,9 @@ import {
     POST_COMMENT_SUCCESS,
     POST_COMMENT_FAILURE,
     SET_CURRENT_COMMENT,
+    UPDATE_COMMENT_BEGIN,
+    UPDATE_COMMENT_SUCCESS,
+    UPDATE_COMMENT_FAILURE,
     DELETE_COMMENT_BEGIN,
     DELETE_COMMENT_SUCCESS,
     DELETE_COMMENT_FAILURE
@@ -93,6 +96,46 @@ const setCurrentComment = (comment) => (dispatch) => {
     dispatch({type: SET_CURRENT_COMMENT, payload: comment});
 };
 
+const updateComment = (comment) => async (dispatch, getState) => {
+    try {
+        dispatch({type: UPDATE_COMMENT_BEGIN});
+
+        const {_id, name, photo} = getState().auth.user;
+        const {article, articles, currentComment} = getState().articles;
+
+        const request = await fetch(`http://localhost:4000/api/v1/comments/${currentComment._id}`, {
+            method: 'put',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({body: comment})
+        });
+
+        if (request.status === 200) {
+            const comment = await request.json();
+            comment.author = {_id, name, photo};
+
+            // find the index of the article in the articles array
+            const articleIndex = articles.findIndex(a => a.id === article.id);
+
+            // find the index of the comment in article.comments
+            const commentIndex = articles[articleIndex].comments.findIndex(c => c._id === comment._id);
+
+            // replace articles with a new set of articles and splice in the updated comment
+            const newArticles = articles;
+            newArticles[articleIndex].comments.splice(commentIndex, 1, comment);
+
+            dispatch({type: UPDATE_COMMENT_SUCCESS, payload: {newArticles, comment}});
+        } else {
+            dispatch({type: UPDATE_COMMENT_FAILURE});
+        }
+    } catch (err) {
+        console.log(err);
+        dispatch({type: UPDATE_COMMENT_FAILURE});
+    }
+};
+
 const deleteComment = (comment) => async (dispatch, getState) => {
     try {
         dispatch({type: DELETE_COMMENT_BEGIN});
@@ -132,5 +175,6 @@ export const articles = {
     fetchArticle,
     postComment,
     setCurrentComment,
+    updateComment,
     deleteComment
 };

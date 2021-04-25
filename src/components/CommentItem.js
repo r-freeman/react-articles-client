@@ -3,7 +3,7 @@ import {Transition} from '@headlessui/react';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '../redux/actions';
 
-function CommentItem({comment, toggleDeleteCommentModal}) {
+function CommentItem({comment, toggleUpdateCommentModal, toggleDeleteCommentModal}) {
     const {user} = useSelector(state => state.auth);
     const [commentMenu, setCommentMenu] = useState(false);
     const dispatch = useDispatch();
@@ -62,7 +62,8 @@ function CommentItem({comment, toggleDeleteCommentModal}) {
                                                 <button type="button"
                                                         className="w-full text-left text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 focus:outline-none"
                                                         role="menuitem"
-                                                        tabIndex="-1" id="menu-item-0">Edit
+                                                        tabIndex="-1" id="menu-item-0"
+                                                        onClick={toggleUpdateCommentModal}>Update
                                                 </button>
                                                 <button type="button"
                                                         className="w-full text-left text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 focus:outline-none"

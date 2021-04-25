@@ -8,6 +8,9 @@ import {
     POST_COMMENT_SUCCESS,
     POST_COMMENT_FAILURE,
     SET_CURRENT_COMMENT,
+    UPDATE_COMMENT_BEGIN,
+    UPDATE_COMMENT_SUCCESS,
+    UPDATE_COMMENT_FAILURE,
     DELETE_COMMENT_BEGIN,
     DELETE_COMMENT_SUCCESS,
     DELETE_COMMENT_FAILURE
@@ -18,6 +21,7 @@ const initialState = {
     article: {},
     isFetchingArticles: false,
     isPostingComment: false,
+    isUpdatingComment: false,
     isDeletingComment: false,
     currentComment: {}
 };
@@ -46,6 +50,17 @@ const articles = (state = initialState, action) => {
             return {...state, isPostingComment: false};
         case SET_CURRENT_COMMENT:
             return {...state, currentComment: action.payload};
+        case UPDATE_COMMENT_BEGIN:
+            return {...state, isUpdatingComment: true};
+        case UPDATE_COMMENT_SUCCESS:
+            return {
+                ...state,
+                articles: action.payload.newArticles,
+                isUpdatingComment: false,
+                currentComment: action.payload.comment
+            };
+        case UPDATE_COMMENT_FAILURE:
+            return {...state, isUpdatingComment: false};
         case DELETE_COMMENT_BEGIN:
             return {...state, isDeletingComment: true};
         case DELETE_COMMENT_SUCCESS:
