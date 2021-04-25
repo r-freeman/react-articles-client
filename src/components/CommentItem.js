@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import actions from '../redux/actions';
 
 function CommentItem({comment, toggleUpdateCommentModal, toggleDeleteCommentModal}) {
-    const {user} = useSelector(state => state.auth);
+    const {user, isLoggedIn} = useSelector(state => state.auth);
     const [commentMenu, setCommentMenu] = useState(false);
     const dispatch = useDispatch();
 
@@ -13,7 +13,7 @@ function CommentItem({comment, toggleUpdateCommentModal, toggleDeleteCommentModa
         setCommentMenu(!commentMenu);
     }
 
-    const isCommentAuthor = (Object.keys(user).length > 0 && comment.author._id === user._id);
+    const isCommentAuthor = (isLoggedIn && comment.author._id === user._id);
 
     return (
         <React.Fragment>
