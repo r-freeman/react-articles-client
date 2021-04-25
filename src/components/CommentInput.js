@@ -25,8 +25,8 @@ function CommentInput() {
         },
         validate,
         onSubmit: async values => {
-            formik.resetForm();
             await dispatch(actions.articles.postComment(values.comment));
+            formik.resetForm();
         }
     });
 
