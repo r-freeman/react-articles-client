@@ -8,6 +8,7 @@ import CommentList from '../components/CommentList';
 import CommentInput from '../components/CommentInput';
 
 function Article() {
+    const {isLoggedIn} = useSelector(state => state.auth);
     const {article} = useSelector(state => state.articles);
     const dispatch = useDispatch();
     let {slug} = useParams();
@@ -46,7 +47,9 @@ function Article() {
                     <section className="mt-10 text-lg max-w-prose mx-auto">
                         <h2 className="block text-xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-2xl">Comments</h2>
                         <CommentList/>
+                        {isLoggedIn &&
                         <CommentInput/>
+                        }
                     </section>
                 </div>
             </div>
