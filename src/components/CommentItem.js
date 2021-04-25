@@ -13,7 +13,7 @@ function CommentItem({comment, toggleUpdateCommentModal, toggleDeleteCommentModa
         setCommentMenu(!commentMenu);
     }
 
-    const isCommentAuthor = comment.author._id === user._id;
+    const isCommentAuthor = (Object.keys(user).length > 0 && comment.author._id === user._id);
 
     return (
         <React.Fragment>
