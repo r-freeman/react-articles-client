@@ -44,7 +44,7 @@ function Article() {
                             {article.body}
                         </p>
                     </div>
-                    <section className="mt-10 text-lg max-w-prose mx-auto">
+                    <section className="mt-10 text-lg max-w-prose mx-auto mb-32">
                         <h2 className="block text-xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-2xl">Comments</h2>
                         <CommentList/>
                         {isLoggedIn &&
