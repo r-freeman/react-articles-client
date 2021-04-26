@@ -3,7 +3,8 @@ import {
     FETCH_USER_FAILURE,
     LOGIN_BEGIN,
     LOGIN_SUCCESS,
-    LOGIN_FAILURE
+    LOGIN_FAILURE,
+    LOGOUT_SUCCESS
 } from '../types';
 
 const fetchUser = () => async (dispatch) => {
@@ -46,4 +47,9 @@ const login = (email, password) => (dispatch) => {
     });
 };
 
-export const auth = {fetchUser, login};
+const logout = () => (dispatch) => {
+    localStorage.removeItem('user');
+    dispatch({type: LOGOUT_SUCCESS, payload: {isLoggedIn: false, user: null}});
+}
+
+export const auth = {fetchUser, login, logout};

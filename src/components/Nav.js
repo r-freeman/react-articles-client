@@ -1,17 +1,28 @@
 import React, {useState} from 'react';
-import {NavLink, useRouteMatch} from 'react-router-dom';
+import {NavLink, useRouteMatch, useHistory} from 'react-router-dom';
 import {Transition} from '@headlessui/react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+
+import actions from '../redux/actions';
 
 function Nav() {
     const {user, isLoggedIn} = useSelector(state => state.auth);
+    const dispatch = useDispatch();
     const [userMenu, setUserMenu] = useState(false);
     const [navMenu, setNavMenu] = useState(false);
     let match = useRouteMatch();
+    let history = useHistory();
 
     const toggleNavMenu = () => setNavMenu(!navMenu);
     const toggleUserMenu = () => setUserMenu(!userMenu);
+
     const isCurrentPath = (path) => match.path.includes(path);
+
+    const handleLogout = () => {
+        dispatch(actions.auth.logout());
+        dispatch(actions.articles.fetchArticles());
+        history.push('/');
+    }
 
     return (
         <nav className="bg-gray-800">
@@ -94,10 +105,12 @@ function Nav() {
                                                  className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
                                                  role="menuitem"
                                                  tabIndex="-1" id="user-menu-item-1">Settings</NavLink>
-                                        <NavLink to="/"
-                                                 className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
-                                                 role="menuitem"
-                                                 tabIndex="-1" id="user-menu-item-2">Log out</NavLink>
+                                        <button type="button"
+                                                className="w-full text-left hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
+                                                role="menuitem"
+                                                tabIndex="-1" id="user-menu-item-2"
+                                                onClick={handleLogout}>Log out
+                                        </button>
                                     </div>
                                 </Transition>
                             </div>

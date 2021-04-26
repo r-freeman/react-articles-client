@@ -3,7 +3,7 @@ import {
     FETCH_USER_FAILURE,
     LOGIN_BEGIN,
     LOGIN_SUCCESS,
-    LOGIN_FAILURE
+    LOGIN_FAILURE, LOGOUT_SUCCESS
 } from '../types';
 
 const initialState = {user: null, isAuthenticating: false, isLoggedIn: false};
@@ -25,6 +25,8 @@ const auth = (state = initialState, action) => {
             };
         case LOGIN_FAILURE:
             return {...state, isAuthenticating: false};
+        case LOGOUT_SUCCESS:
+            return {...state, isLoggedIn: action.payload.isLoggedIn, user: action.payload.user};
         default:
             return state;
     }
