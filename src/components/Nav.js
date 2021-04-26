@@ -68,7 +68,7 @@ function Nav() {
                     </div>
                     {isLoggedIn
                         ? <div
-                            className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                            className="absolute inset-y-0 z-10 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                             <div className="ml-3 relative">
                                 {user &&
                                 <div>
@@ -106,7 +106,7 @@ function Nav() {
                                                  role="menuitem"
                                                  tabIndex="-1" id="user-menu-item-1">Settings</NavLink>
                                         <button type="button"
-                                                className="w-full text-left hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
+                                                className="w-full text-left hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700 focus:outline-none"
                                                 role="menuitem"
                                                 tabIndex="-1" id="user-menu-item-2"
                                                 onClick={handleLogout}>Log out
