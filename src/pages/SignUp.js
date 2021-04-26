@@ -18,7 +18,7 @@ function SignUp() {
         }
     }, [isLoggedIn]);
 
-    const goHome = () => history.push('/');
+    const goHome = () => history.push('/home');
 
     const validate = values => {
         const errors = {};
