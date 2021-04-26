@@ -4,7 +4,7 @@ import {Transition} from '@headlessui/react';
 import {useSelector} from 'react-redux';
 
 function Nav() {
-    const {user} = useSelector(state => state.auth);
+    const {user, isLoggedIn} = useSelector(state => state.auth);
     const [userMenu, setUserMenu] = useState(false);
     const [navMenu, setNavMenu] = useState(false);
     let match = useRouteMatch();
@@ -50,57 +50,75 @@ function Nav() {
                         <div className="hidden sm:block sm:ml-6">
                             <div className="flex space-x-4">
                                 <NavLink to="/articles"
-                                         className={`${isCurrentPath('/articles') ? 'bg-gray-900 text-white' : ''} text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium`}
+                                         className={`${isCurrentPath('articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium`}
                                          aria-current="page">Articles</NavLink>
                             </div>
                         </div>
                     </div>
-                    <div
-                        className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                        <div className="ml-3 relative">
-                            {user &&
-                            <div>
-                                <button type="button"
-                                        className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                                        id="user-menu-button" aria-expanded="false" aria-haspopup="true"
-                                        onClick={toggleUserMenu}
-                                        onBlur={() => setUserMenu(false)}
-                                >
-                                    <span className="sr-only">Open user menu</span>
-                                    <img className="h-8 w-8 rounded-full"
-                                         src={user.photo}
-                                         alt={user.name}/>
-                                </button>
-                            </div>
-                            }
-                            <Transition
-                                show={userMenu}
-                                enter="transition ease-out duration-100"
-                                enterFrom="transform opacity-0 scale-95"
-                                enterTo="transform opacity-100 scale-100"
-                                leave="transition ease-in duration-75"
-                                leaveFrom="transform opacity-100 scale-100"
-                                leaveTo="transform opacity-0 scale-95">
-                                <div
-                                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                    role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
-                                    tabIndex="-1">
-                                    <NavLink to="/"
-                                             className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
-                                             role="menuitem"
-                                             tabIndex="-1" id="user-menu-item-0">Profile</NavLink>
-                                    <NavLink to="/"
-                                             className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
-                                             role="menuitem"
-                                             tabIndex="-1" id="user-menu-item-1">Settings</NavLink>
-                                    <NavLink to="/"
-                                             className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
-                                             role="menuitem"
-                                             tabIndex="-1" id="user-menu-item-2">Log out</NavLink>
+                    {isLoggedIn
+                        ? <div
+                            className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                            <div className="ml-3 relative">
+                                {user &&
+                                <div>
+                                    <button type="button"
+                                            className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                                            id="user-menu-button" aria-expanded="false" aria-haspopup="true"
+                                            onClick={toggleUserMenu}
+                                            onBlur={() => setUserMenu(false)}
+                                    >
+                                        <span className="sr-only">Open user menu</span>
+                                        <img className="h-8 w-8 rounded-full"
+                                             src={user.photo}
+                                             alt={user.name}/>
+                                    </button>
                                 </div>
-                            </Transition>
+                                }
+                                <Transition
+                                    show={userMenu}
+                                    enter="transition ease-out duration-100"
+                                    enterFrom="transform opacity-0 scale-95"
+                                    enterTo="transform opacity-100 scale-100"
+                                    leave="transition ease-in duration-75"
+                                    leaveFrom="transform opacity-100 scale-100"
+                                    leaveTo="transform opacity-0 scale-95">
+                                    <div
+                                        className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                        role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                                        tabIndex="-1">
+                                        <NavLink to="/"
+                                                 className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
+                                                 role="menuitem"
+                                                 tabIndex="-1" id="user-menu-item-0">Profile</NavLink>
+                                        <NavLink to="/"
+                                                 className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
+                                                 role="menuitem"
+                                                 tabIndex="-1" id="user-menu-item-1">Settings</NavLink>
+                                        <NavLink to="/"
+                                                 className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
+                                                 role="menuitem"
+                                                 tabIndex="-1" id="user-menu-item-2">Log out</NavLink>
+                                    </div>
+                                </Transition>
+                            </div>
                         </div>
-                    </div>
+                        : <div className="hidden sm:flex items-center space-x-4">
+                            <NavLink
+                                exact
+                                to="/login"
+                                className={`${isCurrentPath('login') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium`}>
+                                Log in
+                            </NavLink>
+                            <NavLink
+                                exact
+                                to="/register"
+                                as="button"
+                                type="button"
+                                className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500">
+                                <span>Sign up</span>
+                            </NavLink>
+                        </div>
+                    }
                 </div>
             </div>
             <div className={`${!navMenu ? 'hidden' : 'sm:hidden'}`} id="mobile-menu">
@@ -108,6 +126,24 @@ function Nav() {
                     <NavLink to="/articles"
                              className={`${isCurrentPath('articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} block px-3 py-2 rounded-md hover:bg-gray-700 text-base font-medium`}
                              aria-current="page">Articles</NavLink>
+                    {!isLoggedIn &&
+                    <div className="space-y-1">
+                        <NavLink
+                            exact
+                            to="/login"
+                            className={`${isCurrentPath('login') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} block px-3 py-2 rounded-md hover:bg-gray-700 text-base font-medium`}>
+                            Log in
+                        </NavLink>
+                        <button type="button"
+                                className="w-full text-left px-3 py-2 shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500">
+                            <NavLink
+                                exact
+                                to="/signup">
+                                <span>Sign up</span>
+                            </NavLink>
+                        </button>
+                    </div>
+                    }
                 </div>
             </div>
         </nav>
