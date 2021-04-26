@@ -66,6 +66,16 @@ function Nav() {
                                 <NavLink exact to="/articles"
                                          className={`${isCurrentPath('/articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium`}
                                          aria-current="page">Articles</NavLink>
+                                <NavLink exact to="/create-article"
+                                         className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-green-500">
+                                    <svg className="-ml-1 -mr-1 md:mr-2 h-5 w-5" fill="none" stroke="currentColor"
+                                         viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                    <span className="hidden md:block">Create Article</span>
+                                </NavLink>
                             </div>
                         </div>
                     </div>
@@ -149,6 +159,18 @@ function Nav() {
                         to="/articles"
                         className={`${isCurrentPath('/articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} block px-3 py-2 rounded-md hover:bg-gray-700 text-base font-medium`}
                         aria-current="page">Articles</NavLink>
+                    {isLoggedIn &&
+                    <NavLink exact to="/create-article"
+                             className="relative inline-flex w-full items-center px-3 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-green-500">
+                        <svg className="-ml-1 -mr-1 md:mr-2 h-5 w-5 hidden md:block" fill="none" stroke="currentColor"
+                             viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                        </svg>
+                        <span>Create Article</span>
+                    </NavLink>
+                    }
                     {!isLoggedIn &&
                     <div className="space-y-1">
                         <NavLink
