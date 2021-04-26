@@ -17,7 +17,12 @@ const auth = (state = initialState, action) => {
         case LOGIN_BEGIN:
             return {...state, isAuthenticating: true};
         case LOGIN_SUCCESS:
-            return {...state, user: action.payload, isAuthenticating: false, isLoggedIn: true};
+            return {
+                ...state,
+                user: action.payload,
+                isAuthenticating: false,
+                isLoggedIn: true
+            };
         case LOGIN_FAILURE:
             return {...state, isAuthenticating: false};
         default:
