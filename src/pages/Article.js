@@ -35,10 +35,21 @@ function Article() {
                               {article.title}
                             </span>
                         </h1>
+                        <div className="flex flex-col items-center mt-6 text-center">
+                            <img className="mx-auto h-16 w-16 rounded-full"
+                                 src={article.author.photo}
+                                 alt={article.author.name}/>
+                            <div className="mt-1">
+                                <div>
+                                    <h3 className="text-sm font-medium text-gray-900">{article.author.name}</h3>
+                                </div>
+                            </div>
+                        </div>
                         <p className="mt-8 text-xl text-gray-500 leading-8">
                             {article.excerpt}
                         </p>
                     </div>
+
                     <div className="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
                         <p className="whitespace-pre-wrap">
                             {article.body}
