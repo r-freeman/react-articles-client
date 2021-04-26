@@ -50,7 +50,7 @@ function Nav() {
                     </div>
                     <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex-shrink-0 flex items-center text-indigo-500">
-                            <NavLink to="/">
+                            <NavLink to="/home">
                                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -60,8 +60,11 @@ function Nav() {
                         </div>
                         <div className="hidden sm:block sm:ml-6">
                             <div className="flex space-x-4">
-                                <NavLink to="/articles"
-                                         className={`${isCurrentPath('articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium`}
+                                <NavLink exact to="/home"
+                                         className={`${isCurrentPath('/home') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium`}
+                                         aria-current="page">Home</NavLink>
+                                <NavLink exact to="/articles"
+                                         className={`${isCurrentPath('/articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium`}
                                          aria-current="page">Articles</NavLink>
                             </div>
                         </div>
@@ -97,11 +100,11 @@ function Nav() {
                                         className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                         role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                         tabIndex="-1">
-                                        <NavLink to="/"
+                                        <NavLink exact to="/"
                                                  className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
                                                  role="menuitem"
                                                  tabIndex="-1" id="user-menu-item-0">Profile</NavLink>
-                                        <NavLink to="/"
+                                        <NavLink exact to="/"
                                                  className="hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700"
                                                  role="menuitem"
                                                  tabIndex="-1" id="user-menu-item-1">Settings</NavLink>
@@ -136,15 +139,22 @@ function Nav() {
             </div>
             <div className={`${!navMenu ? 'hidden' : 'sm:hidden'}`} id="mobile-menu">
                 <div className="px-8 pt-2 pb-3 space-y-1">
-                    <NavLink to="/articles"
-                             className={`${isCurrentPath('articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} block px-3 py-2 rounded-md hover:bg-gray-700 text-base font-medium`}
-                             aria-current="page">Articles</NavLink>
+                    <NavLink
+                        exact
+                        to="/home"
+                        className={`${isCurrentPath('/home') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} block px-3 py-2 rounded-md hover:bg-gray-700 text-base font-medium`}
+                        aria-current="page">Home</NavLink>
+                    <NavLink
+                        exact
+                        to="/articles"
+                        className={`${isCurrentPath('/articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} block px-3 py-2 rounded-md hover:bg-gray-700 text-base font-medium`}
+                        aria-current="page">Articles</NavLink>
                     {!isLoggedIn &&
                     <div className="space-y-1">
                         <NavLink
                             exact
                             to="/login"
-                            className={`${isCurrentPath('login') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} block px-3 py-2 rounded-md hover:bg-gray-700 text-base font-medium`}>
+                            className={`${isCurrentPath('/login') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} block px-3 py-2 rounded-md hover:bg-gray-700 text-base font-medium`}>
                             Log in
                         </NavLink>
                         <button type="button"
