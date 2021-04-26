@@ -45,6 +45,7 @@ function Login() {
         onSubmit: ({email, password}) => {
             dispatch(actions.auth.login(email, password))
                 .then(status => {
+                    dispatch(actions.articles.fetchArticles());
                     setLoginError(status);
                     formik.resetForm();
                     goHome();
@@ -177,7 +178,7 @@ function Login() {
                                 }
                                 <div>
                                     <button type="submit"
-                                            className="w-full inline-flex items-center justify-center px-4 py-3 leading-tight border border-transparent text-base sm:text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            className="w-full inline-flex items-center justify-center px-4 py-2 leading-tight border border-transparent text-base sm:text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                             onClick={formik.handleSubmit}
                                             disabled={isAuthenticating}>
                                         {isAuthenticating
