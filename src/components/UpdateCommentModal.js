@@ -89,7 +89,7 @@ function UpdateCommentModal({toggleUpdateCommentModal}) {
                                 <div
                                     className="mt-3 sm:flex sm:flex-row-reverse items-center">
                                     <button type="submit"
-                                            className="w-full sm:w-20 inline-flex items-center justify-center px-4 py-2 border border-transparent sm:ml-3 text-base sm:text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            className="w-full sm:w-20 inline-flex items-center justify-center px-4 py-2 leading-tight border border-transparent sm:ml-3 text-base sm:text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                             onClick={formik.handleSubmit}
                                             disabled={isUpdatingComment}
                                     >
