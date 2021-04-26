@@ -114,7 +114,7 @@ function Login() {
                                     <p className="mt-2 text-sm font-medium text-red-500"
                                        id="email-error">{formik.errors.email}</p>}
                                 </div>
-                                <div className="space-y-1">
+                                <div>
                                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                                         Password
                                     </label>
