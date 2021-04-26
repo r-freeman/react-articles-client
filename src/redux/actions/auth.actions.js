@@ -4,7 +4,10 @@ import {
     LOGIN_BEGIN,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    LOGOUT_SUCCESS, REGISTER_BEGIN, REGISTER_SUCCESS, REGISTER_FAILURE
+    LOGOUT_SUCCESS,
+    REGISTER_BEGIN,
+    REGISTER_SUCCESS,
+    REGISTER_FAILURE
 } from '../types';
 
 const fetchUser = () => async (dispatch) => {
