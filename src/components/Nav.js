@@ -21,7 +21,7 @@ function Nav() {
     const handleLogout = () => {
         dispatch(actions.auth.logout());
         dispatch(actions.articles.fetchArticles());
-        history.push('/');
+        history.push('/home');
     }
 
     return (
@@ -59,13 +59,14 @@ function Nav() {
                             </NavLink>
                         </div>
                         <div className="hidden sm:block sm:ml-6">
-                            <div className="flex space-x-4">
+                            <div className="flex space-x-4 items-center">
                                 <NavLink exact to="/home"
                                          className={`${isCurrentPath('/home') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium`}
                                          aria-current="page">Home</NavLink>
                                 <NavLink exact to="/articles"
                                          className={`${isCurrentPath('/articles') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white'} hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium`}
                                          aria-current="page">Articles</NavLink>
+                                {isLoggedIn &&
                                 <NavLink exact to="/create-article"
                                          className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-green-500">
                                     <svg className="-ml-1 -mr-1 md:mr-2 h-5 w-5" fill="none" stroke="currentColor"
@@ -76,6 +77,7 @@ function Nav() {
                                     </svg>
                                     <span className="hidden md:block">Create Article</span>
                                 </NavLink>
+                                }
                             </div>
                         </div>
                     </div>
