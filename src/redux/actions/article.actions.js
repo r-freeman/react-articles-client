@@ -7,6 +7,9 @@ import {
     POST_ARTICLE_BEGIN,
     POST_ARTICLE_SUCCESS,
     POST_ARTICLE_FAILURE,
+    DELETE_ARTICLE_BEGIN,
+    DELETE_ARTICLE_SUCCESS,
+    DELETE_ARTICLE_FAILURE,
     POST_COMMENT_BEGIN,
     POST_COMMENT_SUCCESS,
     POST_COMMENT_FAILURE,
@@ -94,6 +97,37 @@ const postArticle = ({title, excerpt, content}) => (dispatch, getState) => {
             reject(err);
         });
     });
+}
+
+const deleteArticle = (article) => async (dispatch, getState) => {
+    try {
+        dispatch({type: DELETE_ARTICLE_BEGIN});
+
+        const {articles} = getState().articles;
+
+        const request = await fetch(`http://localhost:4000/api/v1/articles/${article._id}`, {
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (request.status === 204) {
+            // find the index of the article in the articles array
+            const articleIndex = articles.findIndex(a => a.id === article._id);
+
+            // replace articles with a new set of articles, removing the delete article
+            const newArticles = articles;
+            newArticles.splice(articleIndex, 1);
+
+            dispatch({type: DELETE_ARTICLE_SUCCESS, payload: newArticles});
+        } else {
+            dispatch({type: DELETE_ARTICLE_FAILURE});
+        }
+    } catch (err) {
+        console.log(err);
+        dispatch({type: DELETE_ARTICLE_FAILURE});
+    }
 }
 
 const postComment = (comment) => async (dispatch, getState) => {
@@ -215,6 +249,7 @@ export const articles = {
     fetchArticles,
     fetchArticle,
     postArticle,
+    deleteArticle,
     postComment,
     setCurrentComment,
     updateComment,

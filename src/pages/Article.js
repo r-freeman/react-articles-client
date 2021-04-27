@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import actions from '../redux/actions';
@@ -6,8 +6,10 @@ import actions from '../redux/actions';
 import Nav from '../components/Nav';
 import CommentList from '../components/CommentList';
 import CommentInput from '../components/CommentInput';
+import DeleteArticleModal from '../components/DeleteArticleModal';
 
 function Article() {
+    const [deleteArticleModal, setDeleteArticleModal] = useState(false);
     const {isLoggedIn} = useSelector(state => state.auth);
     const {article} = useSelector(state => state.articles);
     const dispatch = useDispatch();
@@ -17,11 +19,17 @@ function Article() {
         dispatch(actions.articles.fetchArticle(slug));
     }, [dispatch, slug]);
 
+    const toggleDeleteArticleModal = () => setDeleteArticleModal(!deleteArticleModal);
+
     return (
         <div>
             <header>
                 <Nav/>
             </header>
+            {deleteArticleModal &&
+            <DeleteArticleModal
+                toggleDeleteArticleModal={toggleDeleteArticleModal}/>
+            }
             <div className="bg-white py-16 overflow-hidden relative">
                 <div className="-mt-4 mb-8 md:absolute md:top-0 md:right-0 md:p-10 md:my-auto">
                     {isLoggedIn &&
@@ -40,6 +48,7 @@ function Article() {
                               </button>
                               <button type="button"
                                       className="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-400 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                                      onClick={toggleDeleteArticleModal}
                               >
                                 <span className="sr-only">Delete</span>
                                   <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
