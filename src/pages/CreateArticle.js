@@ -90,7 +90,7 @@ function CreateArticle() {
                                         ? 'border-red-500'
                                         : (formik.touched.title && !formik.errors.title)
                                             ? 'border-green-500'
-                                            : 'border-gray-300'} flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm`}
+                                            : 'border-gray-300'} flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm pr-10`}
                                 />
                                 {(formik.touched.title && formik.errors.title) ? <div
                                         className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -134,7 +134,7 @@ function CreateArticle() {
                                         ? 'border-red-500'
                                         : (formik.touched.excerpt && !formik.errors.excerpt)
                                             ? 'border-green-500'
-                                            : 'border-gray-300'} flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm`}
+                                            : 'border-gray-300'} flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm pr-10`}
                                 />
                                 {(formik.touched.excerpt && formik.errors.excerpt) ? <div
                                         className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
