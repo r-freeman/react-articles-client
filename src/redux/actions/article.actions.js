@@ -106,7 +106,6 @@ const updateArticle = ({title, excerpt, content}) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         dispatch({type: UPDATE_ARTICLE_BEGIN});
 
-        const {_id, name, photo} = getState().auth.user;
         const {article, articles} = getState().articles;
 
         fetch(`http://localhost:4000/api/v1/articles/${article._id}`, {
@@ -120,8 +119,6 @@ const updateArticle = ({title, excerpt, content}) => (dispatch, getState) => {
             .then(res => {
                 if (response.status === 200) {
                     const article = res;
-
-                    article.author = {_id, name, photo};
 
                     // find the index of the article in articles array
                     const articleIndex = articles.findIndex(a => a.id === article._id);
