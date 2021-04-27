@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory, NavLink} from 'react-router-dom';
 import actions from '../redux/actions';
 
 import Nav from '../components/Nav';
@@ -13,6 +13,7 @@ function Article() {
     const {isLoggedIn} = useSelector(state => state.auth);
     const {article} = useSelector(state => state.articles);
     const dispatch = useDispatch();
+    let history = useHistory();
     let {slug} = useParams();
 
     useEffect(() => {
@@ -35,9 +36,8 @@ function Article() {
                     {isLoggedIn &&
                     <div className="flex justify-center">
                             <span className="relative z-0 inline-flex shadow-sm rounded-md -space-x-px">
-                              <button type="button"
-                                      className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-400 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
-                              >
+                              <NavLink to="/edit-article"
+                                       className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-400 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
                                 <span className="sr-only">Edit</span>
                                   <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                        fill="currentColor"
@@ -45,7 +45,7 @@ function Article() {
                                   <path
                                       d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
                                 </svg>
-                              </button>
+                              </NavLink>
                               <button type="button"
                                       className="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-400 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
                                       onClick={toggleDeleteArticleModal}

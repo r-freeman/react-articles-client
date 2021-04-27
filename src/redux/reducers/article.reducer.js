@@ -7,6 +7,9 @@ import {
     POST_ARTICLE_BEGIN,
     POST_ARTICLE_SUCCESS,
     POST_ARTICLE_FAILURE,
+    UPDATE_ARTICLE_BEGIN,
+    UPDATE_ARTICLE_SUCCESS,
+    UPDATE_ARTICLE_FAILURE,
     DELETE_ARTICLE_BEGIN,
     DELETE_ARTICLE_SUCCESS,
     DELETE_ARTICLE_FAILURE,
@@ -27,6 +30,7 @@ const initialState = {
     article: {},
     isFetchingArticles: false,
     isPostingArticle: false,
+    isUpdatingArticle: false,
     isDeletingArticle: false,
     isPostingComment: false,
     isUpdatingComment: false,
@@ -57,6 +61,17 @@ const articles = (state = initialState, action) => {
             };
         case POST_ARTICLE_FAILURE:
             return {...state, isPostingArticle: false};
+        case UPDATE_ARTICLE_BEGIN:
+            return {...state, isUpdatingArticle: true};
+        case UPDATE_ARTICLE_SUCCESS:
+            return {
+                ...state,
+                articles: action.payload.articles,
+                article: action.payload.article,
+                isUpdatingArticle: false
+            };
+        case UPDATE_ARTICLE_FAILURE:
+            return {...state, isUpdatingArticle: false};
         case DELETE_ARTICLE_BEGIN:
             return {...state, isDeletingArticle: true};
         case DELETE_ARTICLE_SUCCESS:

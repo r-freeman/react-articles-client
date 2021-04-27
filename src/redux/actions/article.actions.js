@@ -7,6 +7,9 @@ import {
     POST_ARTICLE_BEGIN,
     POST_ARTICLE_SUCCESS,
     POST_ARTICLE_FAILURE,
+    UPDATE_ARTICLE_BEGIN,
+    UPDATE_ARTICLE_SUCCESS,
+    UPDATE_ARTICLE_FAILURE,
     DELETE_ARTICLE_BEGIN,
     DELETE_ARTICLE_SUCCESS,
     DELETE_ARTICLE_FAILURE,
@@ -98,6 +101,47 @@ const postArticle = ({title, excerpt, content}) => (dispatch, getState) => {
         });
     });
 }
+
+const updateArticle = ({title, excerpt, content}) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        dispatch({type: UPDATE_ARTICLE_BEGIN});
+
+        const {_id, name, photo} = getState().auth.user;
+        const {article, articles} = getState().articles;
+
+        fetch(`http://localhost:4000/api/v1/articles/${article._id}`, {
+            method: 'put',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({title, excerpt, body: content})
+        }).then(response => response.json()
+            .then(res => {
+                if (response.status === 200) {
+                    const article = res;
+
+                    article.author = {_id, name, photo};
+
+                    // find the index of the article in articles array
+                    const articleIndex = articles.findIndex(a => a.id === article._id);
+
+                    // replace articles with a new set of articles plus the updated article
+                    const newArticles = articles;
+                    newArticles.splice(articleIndex, 1, article);
+
+                    dispatch({type: UPDATE_ARTICLE_SUCCESS, payload: {articles: newArticles, article}});
+                    resolve(article);
+                } else {
+                    dispatch({type: UPDATE_ARTICLE_FAILURE});
+                    reject("Something went wrong.");
+                }
+            })).catch(err => {
+            dispatch({type: UPDATE_ARTICLE_FAILURE});
+            reject(err);
+        });
+    });
+};
 
 const deleteArticle = (article) => async (dispatch, getState) => {
     try {
@@ -249,6 +293,7 @@ export const articles = {
     fetchArticles,
     fetchArticle,
     postArticle,
+    updateArticle,
     deleteArticle,
     postComment,
     setCurrentComment,
