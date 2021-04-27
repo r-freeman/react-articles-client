@@ -46,7 +46,7 @@ const fetchArticles = () => async (dispatch) => {
     }
 };
 
-const fetchArticle = (slug) => async (dispatch, getState) => {
+const fetchArticle = (slug) => (dispatch, getState) => {
     try {
         const article = getState().articles.articles.find(article => article.slug === slug);
 
