@@ -4,6 +4,9 @@ import {
     FETCH_ARTICLES_FAILURE,
     FETCH_ARTICLE_SUCCESS,
     FETCH_ARTICLE_FAILURE,
+    POST_ARTICLE_BEGIN,
+    POST_ARTICLE_SUCCESS,
+    POST_ARTICLE_FAILURE,
     POST_COMMENT_BEGIN,
     POST_COMMENT_SUCCESS,
     POST_COMMENT_FAILURE,
@@ -20,6 +23,7 @@ const initialState = {
     articles: [],
     article: {},
     isFetchingArticles: false,
+    isPostingArticle: false,
     isPostingComment: false,
     isUpdatingComment: false,
     isDeletingComment: false,
@@ -38,6 +42,17 @@ const articles = (state = initialState, action) => {
             return {...state, article: action.payload}
         case FETCH_ARTICLE_FAILURE:
             return {...state, article: {}};
+        case POST_ARTICLE_BEGIN:
+            return {...state, isPostingArticle: true};
+        case POST_ARTICLE_SUCCESS:
+            return {
+                ...state,
+                articles: action.payload.articles,
+                article: action.payload.article,
+                isPostingArticle: false
+            };
+        case POST_ARTICLE_FAILURE:
+            return {...state, isPostingArticle: false};
         case POST_COMMENT_BEGIN:
             return {...state, isPostingComment: true};
         case POST_COMMENT_SUCCESS:

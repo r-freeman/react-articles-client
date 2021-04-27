@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Article from './pages/Article';
 import Articles from './pages/Articles';
 import SignUp from './pages/SignUp';
+import CreateArticle from './pages/CreateArticle';
 
 function App() {
     const {isLoggedIn} = useSelector(state => state.auth);
@@ -36,6 +37,7 @@ function App() {
                 <Route exact path="/signup" component={SignUp}/>
                 <Route exact path="/articles" component={Articles}/>
                 <Route exact path="/articles/:slug" component={Article}/>
+                <Route exatc path="/create-article" component={CreateArticle}/>
             </Switch>
         </div>
     );

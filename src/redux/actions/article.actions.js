@@ -4,6 +4,9 @@ import {
     FETCH_ARTICLES_FAILURE,
     FETCH_ARTICLE_SUCCESS,
     FETCH_ARTICLE_FAILURE,
+    POST_ARTICLE_BEGIN,
+    POST_ARTICLE_SUCCESS,
+    POST_ARTICLE_FAILURE,
     POST_COMMENT_BEGIN,
     POST_COMMENT_SUCCESS,
     POST_COMMENT_FAILURE,
@@ -54,6 +57,44 @@ const fetchArticle = (slug) => async (dispatch, getState) => {
         dispatch({type: FETCH_ARTICLE_FAILURE});
     }
 };
+
+const postArticle = ({title, excerpt, content}) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        dispatch({type: POST_ARTICLE_BEGIN});
+
+        const {_id, name, photo} = getState().auth.user;
+        const {articles} = getState().articles;
+
+        fetch('http://localhost:4000/api/v1/articles', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({title, excerpt, body: content, author_id: _id})
+        }).then(response => response.json()
+            .then(res => {
+                if (response.status === 201) {
+                    const article = res;
+
+                    article.author = {_id, name, photo};
+
+                    // replace articles with a new set of articles containing the new article
+                    const newArticles = articles;
+                    newArticles.push(article)
+
+                    dispatch({type: POST_ARTICLE_SUCCESS, payload: {articles: newArticles, article}});
+                    resolve(article);
+                } else {
+                    dispatch({type: POST_ARTICLE_FAILURE});
+                    reject("Something went wrong.");
+                }
+            })).catch(err => {
+            dispatch({type: POST_ARTICLE_FAILURE});
+            reject(err);
+        });
+    });
+}
 
 const postComment = (comment) => async (dispatch, getState) => {
     try {
@@ -173,6 +214,7 @@ const deleteComment = (comment) => async (dispatch, getState) => {
 export const articles = {
     fetchArticles,
     fetchArticle,
+    postArticle,
     postComment,
     setCurrentComment,
     updateComment,
