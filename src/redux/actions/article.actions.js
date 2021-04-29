@@ -2,6 +2,9 @@ import {
     FETCH_ARTICLES_BEGIN,
     FETCH_ARTICLES_SUCCESS,
     FETCH_ARTICLES_FAILURE,
+    FETCH_AUTHORS_BEGIN,
+    FETCH_AUTHORS_SUCCESS,
+    FETCH_AUTHORS_FAILURE,
     FETCH_CATEGORIES_BEGIN,
     FETCH_CATEGORIES_SUCCESS,
     FETCH_CATEGORIES_FAILURE,
@@ -49,6 +52,30 @@ const fetchArticles = () => async (dispatch) => {
     } catch (err) {
         console.log(err);
         dispatch({type: FETCH_ARTICLES_FAILURE});
+    }
+};
+
+const fetchAuthors = () => async (dispatch) => {
+    try {
+        dispatch({type: FETCH_AUTHORS_BEGIN});
+
+        const request = await fetch('http://localhost:4000/api/v1/authors', {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
+
+        if (request.status === 200) {
+            const authors = await request.json();
+
+            dispatch({type: FETCH_AUTHORS_SUCCESS, payload: authors});
+        } else {
+            dispatch({type: FETCH_AUTHORS_FAILURE});
+        }
+    } catch (err) {
+        console.log(err);
+        dispatch({type: FETCH_AUTHORS_FAILURE});
     }
 };
 
@@ -324,6 +351,7 @@ const deleteComment = (comment) => async (dispatch, getState) => {
 
 export const articles = {
     fetchArticles,
+    fetchAuthors,
     fetchCategories,
     fetchArticle,
     postArticle,

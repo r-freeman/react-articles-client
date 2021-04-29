@@ -29,6 +29,10 @@ function App() {
     }, [dispatch]);
 
     useEffect(() => {
+        dispatch(actions.articles.fetchAuthors());
+    }, [dispatch]);
+
+    useEffect(() => {
         dispatch(actions.articles.fetchCategories());
     }, [dispatch]);
 
