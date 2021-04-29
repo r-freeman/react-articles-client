@@ -12,25 +12,24 @@ function CommentList() {
     const [deleteCommentModal, setDeleteCommentModal] = useState(false);
     const [blockScroll, allowScroll] = useScrollBlock();
 
-    const toggleUpdateCommentModal = () => {
-        setUpdateCommentModal(!updateCommentModal);
+    const toggleUpdateCommentModal = () => setUpdateCommentModal(!updateCommentModal);
+    const toggleDeleteCommentModal = () => setDeleteCommentModal(!deleteCommentModal);
 
-        if (updateCommentModal) {
+    useEffect(() => {
+        if (!updateCommentModal) {
             allowScroll();
         } else {
             blockScroll();
         }
-    };
+    }, [updateCommentModal]);
 
-    const toggleDeleteCommentModal = () => {
-        setDeleteCommentModal(!deleteCommentModal);
-
-        if (deleteCommentModal) {
+    useEffect(() => {
+        if (!deleteCommentModal) {
             allowScroll();
         } else {
             blockScroll();
         }
-    }
+    }, [deleteCommentModal]);
 
     const hasComments = (Object.keys(article).length > 0 && article.comments.length > 0);
 
