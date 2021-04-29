@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {useParams, useHistory, NavLink} from 'react-router-dom';
+import {useParams, NavLink} from 'react-router-dom';
+import useScrollBlock from '../hooks/useScrollBlock';
 import actions from '../redux/actions';
 
 import Nav from '../components/Nav';
@@ -13,14 +14,23 @@ function Article() {
     const {isLoggedIn} = useSelector(state => state.auth);
     const {article} = useSelector(state => state.articles);
     const dispatch = useDispatch();
-    let history = useHistory();
+    const [blockScroll, allowScroll] = useScrollBlock();
+
     let {slug} = useParams();
 
     useEffect(() => {
         dispatch(actions.articles.fetchArticle(slug));
     }, [dispatch, slug]);
 
-    const toggleDeleteArticleModal = () => setDeleteArticleModal(!deleteArticleModal);
+    const toggleDeleteArticleModal = () => {
+        setDeleteArticleModal(!deleteArticleModal);
+
+        if (deleteArticleModal) {
+            allowScroll();
+        } else {
+            blockScroll();
+        }
+    };
 
     return (
         <div>

@@ -1,17 +1,36 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 
 import CommentItem from './CommentItem';
 import UpdateCommentModal from './UpdateCommentModal';
 import DeleteCommentModal from './DeleteCommentModal';
+import useScrollBlock from '../hooks/useScrollBlock';
 
 function CommentList() {
     const {article} = useSelector(state => state.articles);
     const [updateCommentModal, setUpdateCommentModal] = useState(false);
     const [deleteCommentModal, setDeleteCommentModal] = useState(false);
+    const [blockScroll, allowScroll] = useScrollBlock();
 
-    const toggleUpdateCommentModal = () => setUpdateCommentModal(!updateCommentModal);
-    const toggleDeleteCommentModal = () => setDeleteCommentModal(!deleteCommentModal);
+    const toggleUpdateCommentModal = () => {
+        setUpdateCommentModal(!updateCommentModal);
+
+        if (updateCommentModal) {
+            allowScroll();
+        } else {
+            blockScroll();
+        }
+    };
+
+    const toggleDeleteCommentModal = () => {
+        setDeleteCommentModal(!deleteCommentModal);
+
+        if (deleteCommentModal) {
+            allowScroll();
+        } else {
+            blockScroll();
+        }
+    }
 
     const hasComments = (Object.keys(article).length > 0 && article.comments.length > 0);
 
