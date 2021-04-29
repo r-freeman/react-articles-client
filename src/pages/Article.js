@@ -67,10 +67,12 @@ function Article() {
                 <div className="px-8">
                     <div className="text-lg max-w-prose mx-auto">
                         <h1>
+                            {article.category &&
                             <span
                                 className="block text-base text-center text-indigo-600 font-semibold tracking-wide uppercase">
-                              Introducing
+                                {article.category.name}
                             </span>
+                            }
                             <span
                                 className="mt-2 block text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                               {article.title}

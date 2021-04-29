@@ -7,7 +7,13 @@ function ArticleItem({article}) {
     return (
         <div>
             <NavLink to={`articles/${article.slug}`} className="mt-2 block">
-                <p className="text-xl font-semibold text-gray-900">{article.title}</p>
+                <h1 className="text-xl font-semibold text-gray-900">
+                    <span
+                        className="text-sm text-indigo-600 font-semibold tracking-wide uppercase">
+                        {article.category.name}
+                    </span>
+                    <span className="block">{article.title}</span>
+                </h1>
                 <p className="mt-3 text-base text-gray-500">{article.excerpt}</p>
             </NavLink>
             <div className="mt-6 flex items-center">
