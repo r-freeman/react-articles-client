@@ -3,13 +3,15 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Switch, Route, useHistory} from 'react-router-dom';
 import actions from './redux/actions';
 
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Article from './pages/Article';
-import Articles from './pages/Articles';
-import SignUp from './pages/SignUp';
-import CreateArticle from './pages/CreateArticle';
-import EditArticle from './pages/EditArticle';
+import {
+    Home,
+    Login,
+    Article,
+    Articles,
+    SignUp,
+    CreateArticle,
+    EditArticle
+} from './pages';
 
 function App() {
     const {isLoggedIn} = useSelector(state => state.auth);
