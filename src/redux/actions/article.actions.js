@@ -68,14 +68,15 @@ const postArticle = ({title, excerpt, content}) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         dispatch({type: POST_ARTICLE_BEGIN});
 
-        const {_id, name, photo} = getState().auth.user;
+        const {_id, name, photo, token} = getState().auth.user;
         const {articles} = getState().articles;
 
         fetch('http://localhost:4000/api/v1/articles', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({title, excerpt, body: content, author_id: _id})
         }).then(response => response.json()
@@ -106,13 +107,15 @@ const updateArticle = ({title, excerpt, content}) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         dispatch({type: UPDATE_ARTICLE_BEGIN});
 
+        const {token} = getState().auth.user;
         const {article, articles} = getState().articles;
 
         fetch(`http://localhost:4000/api/v1/articles/${article._id}`, {
             method: 'put',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({title, excerpt, body: content})
         }).then(response => response.json()
@@ -144,12 +147,14 @@ const deleteArticle = (article) => async (dispatch, getState) => {
     try {
         dispatch({type: DELETE_ARTICLE_BEGIN});
 
+        const {token} = getState().auth.user;
         const {articles} = getState().articles;
 
         const request = await fetch(`http://localhost:4000/api/v1/articles/${article._id}`, {
             method: 'delete',
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         });
 
@@ -175,14 +180,15 @@ const postComment = (comment) => async (dispatch, getState) => {
     try {
         dispatch({type: POST_COMMENT_BEGIN});
 
-        const {_id, name, photo} = getState().auth.user;
+        const {_id, name, photo, token} = getState().auth.user;
         const {article, articles} = getState().articles;
 
         const request = await fetch('http://localhost:4000/api/v1/comments', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({body: comment, author_id: _id, article_id: article._id})
         });
@@ -216,14 +222,15 @@ const updateComment = (comment) => async (dispatch, getState) => {
     try {
         dispatch({type: UPDATE_COMMENT_BEGIN});
 
-        const {_id, name, photo} = getState().auth.user;
+        const {_id, name, photo, token} = getState().auth.user;
         const {article, articles, currentComment} = getState().articles;
 
         const request = await fetch(`http://localhost:4000/api/v1/comments/${currentComment._id}`, {
             method: 'put',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({body: comment})
         });
@@ -256,12 +263,14 @@ const deleteComment = (comment) => async (dispatch, getState) => {
     try {
         dispatch({type: DELETE_COMMENT_BEGIN});
 
+        const {token} = getState().auth.user;
         const {article, articles} = getState().articles;
 
         const request = await fetch(`http://localhost:4000/api/v1/comments/${comment._id}`, {
             method: 'delete',
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         });
 
