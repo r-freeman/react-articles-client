@@ -62,7 +62,7 @@ function UpdateCommentModal({toggleUpdateCommentModal}) {
                                                 <textarea id="comment"
                                                           name="comment"
                                                           rows="5"
-                                                          className={`${formik.errors.comment ? 'border-red-500' : 'border-gray-300'} shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500  sm:text-sm  bg-gray-50 rounded-md`}
+                                                          className={`${formik.errors.comment ? 'border-red-500' : 'border-gray-300'} shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-50 rounded-md`}
                                                           placeholder="Write a comment."
                                                           onChange={formik.handleChange}
                                                           value={formik.values.comment}
