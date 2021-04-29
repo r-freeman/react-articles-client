@@ -15,22 +15,21 @@ function Article() {
     const {article} = useSelector(state => state.articles);
     const dispatch = useDispatch();
     const [blockScroll, allowScroll] = useScrollBlock();
-
     let {slug} = useParams();
 
     useEffect(() => {
         dispatch(actions.articles.fetchArticle(slug));
     }, [dispatch, slug]);
 
-    const toggleDeleteArticleModal = () => {
-        setDeleteArticleModal(!deleteArticleModal);
-
-        if (deleteArticleModal) {
+    useEffect(() => {
+        if (!deleteArticleModal) {
             allowScroll();
         } else {
             blockScroll();
         }
-    };
+    }, [deleteArticleModal]);
+
+    const toggleDeleteArticleModal = () => setDeleteArticleModal(!deleteArticleModal);
 
     return (
         <div>
