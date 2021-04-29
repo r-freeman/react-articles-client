@@ -2,6 +2,9 @@ import {
     FETCH_ARTICLES_BEGIN,
     FETCH_ARTICLES_SUCCESS,
     FETCH_ARTICLES_FAILURE,
+    FETCH_CATEGORIES_BEGIN,
+    FETCH_CATEGORIES_SUCCESS,
+    FETCH_CATEGORIES_FAILURE,
     FETCH_ARTICLE_SUCCESS,
     FETCH_ARTICLE_FAILURE,
     POST_ARTICLE_BEGIN,
@@ -46,6 +49,30 @@ const fetchArticles = () => async (dispatch) => {
     } catch (err) {
         console.log(err);
         dispatch({type: FETCH_ARTICLES_FAILURE});
+    }
+};
+
+const fetchCategories = () => async (dispatch) => {
+    try {
+        dispatch({type: FETCH_CATEGORIES_BEGIN});
+
+        const request = await fetch('http://localhost:4000/api/v1/categories', {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
+
+        if (request.status === 200) {
+            const categories = await request.json();
+
+            dispatch({type: FETCH_CATEGORIES_SUCCESS, payload: categories});
+        } else {
+            dispatch({type: FETCH_CATEGORIES_FAILURE});
+        }
+    } catch (err) {
+        console.log(err);
+        dispatch({type: FETCH_CATEGORIES_FAILURE});
     }
 };
 
@@ -297,6 +324,7 @@ const deleteComment = (comment) => async (dispatch, getState) => {
 
 export const articles = {
     fetchArticles,
+    fetchCategories,
     fetchArticle,
     postArticle,
     updateArticle,

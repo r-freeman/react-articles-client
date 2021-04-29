@@ -2,6 +2,9 @@ import {
     FETCH_ARTICLES_BEGIN,
     FETCH_ARTICLES_SUCCESS,
     FETCH_ARTICLES_FAILURE,
+    FETCH_CATEGORIES_BEGIN,
+    FETCH_CATEGORIES_SUCCESS,
+    FETCH_CATEGORIES_FAILURE,
     FETCH_ARTICLE_SUCCESS,
     FETCH_ARTICLE_FAILURE,
     POST_ARTICLE_BEGIN,
@@ -27,6 +30,7 @@ import {
 
 const initialState = {
     articles: [],
+    categories: [],
     article: {},
     isFetchingArticles: false,
     isPostingArticle: false,
@@ -46,6 +50,12 @@ const articles = (state = initialState, action) => {
             return {...state, articles: action.payload, isFetchingArticles: false};
         case FETCH_ARTICLES_FAILURE:
             return initialState;
+        case FETCH_CATEGORIES_BEGIN:
+            return {...state};
+        case FETCH_CATEGORIES_SUCCESS:
+            return {...state, categories: action.payload};
+        case FETCH_CATEGORIES_FAILURE:
+            return {...state, categories: []};
         case FETCH_ARTICLE_SUCCESS:
             return {...state, article: action.payload}
         case FETCH_ARTICLE_FAILURE:

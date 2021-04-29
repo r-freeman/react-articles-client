@@ -27,6 +27,10 @@ function App() {
     }, [dispatch]);
 
     useEffect(() => {
+        dispatch(actions.articles.fetchCategories());
+    }, [dispatch]);
+
+    useEffect(() => {
         history.push('/home');
     }, []);
 
