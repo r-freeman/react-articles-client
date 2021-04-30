@@ -4,10 +4,7 @@ import {useParams, NavLink} from 'react-router-dom';
 import useScrollBlock from '../hooks/useScrollBlock';
 import actions from '../redux/actions';
 
-import Nav from '../components/Nav';
-import CommentList from '../components/CommentList';
-import CommentInput from '../components/CommentInput';
-import DeleteArticleModal from '../components/DeleteArticleModal';
+import {Nav, CommentList, CommentInput, DeleteArticleModal} from '../components';
 
 function Article() {
     const [deleteArticleModal, setDeleteArticleModal] = useState(false);

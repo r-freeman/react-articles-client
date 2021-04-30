@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Nav from '../components/Nav';
-import ArticleList from '../components/ArticleList';
+import {Nav, ArticleList, ArticleFilter} from '../components';
 
 function Home() {
     return (
@@ -18,6 +17,7 @@ function Home() {
                                 elit. Aspernatur deserunt dolores doloribus iure magnam nam quod saepe sunt tenetur
                                 voluptate!</p>
                         </div>
+                        <ArticleFilter/>
                     </div>
                     <ArticleList/>
                 </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Nav from '../components/Nav';
-import ArticleList from '../components/ArticleList';
+import {Nav, ArticleList, ArticleFilter} from '../components';
 
 function Articles() {
     return (
@@ -17,6 +16,7 @@ function Articles() {
                             <p className="text-xl text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing
                                 elit. Dolor eveniet facere, facilis reprehenderit sapiente tempora!</p>
                         </div>
+                        <ArticleFilter/>
                     </div>
                     <ArticleList/>
                 </div>
